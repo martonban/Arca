@@ -3,6 +3,7 @@ project(Arca)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMNAKE_CXX_EXTENSIONS OFF)
 
 file(GLOB ARCA_SOURCES src/*.cpp)
 file(GLOB_RECURSE ARCA_HEADERS include/*.h include/*.hpp)
@@ -29,4 +30,4 @@ add_custom_command(TARGET Arca POST_BUILD
             "$<TARGET_FILE_DIR:Arca>/include"
 )
 
-target_link_libraries(Arca PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(Arca PUBLIC nlohmann_json::nlohmann_json)
