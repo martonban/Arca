@@ -7,6 +7,7 @@ void ArcaInstance::StartArcaInstance(const std::string& applicationName) {
     // BUILD OR LOAD THE INSTANCE
     if(std::filesystem::exists(_instanceFilePath)) {
         _instanceIsReady = true;
+        FetchInstance();
     } else {
         _instanceIsReady = false;
     }

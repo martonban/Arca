@@ -28,7 +28,7 @@ namespace Arca {
         ArcaInstance::GetInstance().StartArcaInstance(applicationName);
     }
 
-    bool IsAlive() {
+    bool IsExists() {
         return ArcaInstance::GetInstance().IsArcaInstanceAlive();
     }
 

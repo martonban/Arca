@@ -2,16 +2,15 @@
 
 int main() {
 
-	Arca::InitArcaInstance("Hello Arca");
+	Arca::InitArcaInstance("HelloArca");
     
-    if(!Arca::IsAlive()) {
-        Arca::ApplicationMetaData metaData {"Hello Arca", "Márton Bán", "v.0.0.1"};
+    if(!Arca::IsExists()) {
+        Arca::ApplicationMetaData metaData {"HelloArca", "Márton Bán", "v.0.0.1"};
         Arca::AddMetaData(metaData);
         Arca::BuildInstance();
-    } else {
-        Arca::FetchArcaInstance();
-        Arca::Test();
     }
+
+    Arca::Test();
 
     std::string input;
     std::cin >> input;
