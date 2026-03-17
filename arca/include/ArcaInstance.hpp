@@ -18,7 +18,6 @@ class ArcaInstance {
             static ArcaInstance instance;
             return instance;
         }
-
         void StartArcaInstance(const std::string& applicationName);
 
         void AddApplicationMetadata(const Arca::ApplicationMetaData& metadataStruct);
@@ -26,9 +25,9 @@ class ArcaInstance {
 
         void FetchInstance();
 
+        void Test();
+
         bool IsArcaInstanceAlive();
-
-
 
         std::filesystem::path GetApplicationPath();
         std::filesystem::path GetInstancePath();
@@ -43,9 +42,8 @@ class ArcaInstance {
         bool _instanceIsReady = false;
         Arca::ApplicationMetaData _metadata;
 
-
         nlohmann::json MetadataSerilaization();
-
+        Arca::ApplicationMetaData MetadataDeserilaization(const nlohmann::json& jsonObject);
 
         // Instace realated guard functions 
         ArcaInstance(const ArcaInstance&) = delete;

@@ -46,6 +46,10 @@ namespace Arca {
         ArcaInstance::GetInstance().FetchInstance();
     }
 
+    void Test() {
+        ArcaInstance::GetInstance().Test();
+    }
+
     std::filesystem::path GetApplicationPath() {
         return ArcaInstance::GetInstance().GetApplicationPath();
     }

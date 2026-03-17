@@ -2,14 +2,15 @@
 
 int main() {
 
-	Arca::InitArcaInstance("RenderLamp");
+	Arca::InitArcaInstance("Hello Arca");
     
     if(!Arca::IsAlive()) {
-        Arca::ApplicationMetaData metaData {"RenderLamp", "Márton Bán", "v.0.0.1"};
+        Arca::ApplicationMetaData metaData {"Hello Arca", "Márton Bán", "v.0.0.1"};
         Arca::AddMetaData(metaData);
         Arca::BuildInstance();
     } else {
         Arca::FetchArcaInstance();
+        Arca::Test();
     }
 
     std::string input;

@@ -32,7 +32,16 @@ void ArcaInstance::Build() {
 }
 
 void ArcaInstance::FetchInstance() {
-    
+    std::ifstream rawFile(_instanceFilePath);
+    if(!rawFile.is_open()) {
+        std::cerr << "Error: ArcaInstance is not exists!" << std::endl; 
+    }
+
+    nlohmann::json json;
+    rawFile >> json;
+
+    _metadata = MetadataDeserilaization(json);
+
 }
 
 
@@ -44,7 +53,14 @@ std::filesystem::path ArcaInstance::GetInstancePath() {
     return _instanceFolderPath / "ArcaFiles";
 }
 
-
+void ArcaInstance::Test() {
+    std::cout << "Arca Test" << std::endl;
+    std::cout << "--------------------------------------" << std::endl;
+    std::cout << _metadata.instanceName << std::endl;
+    std::cout << _metadata.creatorName << std::endl;
+    std::cout << _metadata.version << std::endl;
+    std::cout << "--------------------------------------" << std::endl;
+}
 
 bool ArcaInstance::IsArcaInstanceAlive() {
     return _instanceIsReady;
@@ -62,4 +78,19 @@ nlohmann::json ArcaInstance::MetadataSerilaization() {
         }; 
     }
 
+}
+
+Arca::ApplicationMetaData ArcaInstance::MetadataDeserilaization(const nlohmann::json& jsonObject) {
+    if(jsonObject.contains("ApplicationMetadata")) {
+        nlohmann::json j = jsonObject["ApplicationMetadata"]; 
+        return Arca::ApplicationMetaData {
+            j["ApplicationName"].get<std::string>(),
+            j["Creator"].get<std::string>(),
+            j["Version"].get<std::string>() 
+        };
+    } else {
+        std::cerr << "Error: Metadata is null at the Arca Instance file" << std::endl;
+        return Arca::ApplicationMetaData {};
+    }
+   
 }
