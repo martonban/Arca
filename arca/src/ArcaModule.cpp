@@ -3,7 +3,7 @@
 ArcaModule::ArcaModule(const std::filesystem::path& path, const std::string& name) {
     mModuleName = name;
     // Create Folder for the module 
-    if(io.CreateFolder(path, name)) {
+    if(Arca::ArcaIO::CreateFolder(path, name)) {
         std::cout << "Everything is cool!" << std::endl;
     } else {
         std::cout << "Issue" << std::endl;

@@ -3,10 +3,12 @@
 
 #include <string>
 #include <memory>
+#include <fstream>
 #include <filesystem>
 #include <nlohmann/json.hpp>
 
-#include "ArcaConfigs.hpp"
+#include "ArcaSettings.hpp"
+#include "ArcaIO.hpp"
 #include "ArcaModule.hpp"
 
 class ArcaInstance {
@@ -19,6 +21,19 @@ class ArcaInstance {
 
         void StartArcaInstance(const std::string& applicationName);
 
+        void AddApplicationMetadata(const Arca::ApplicationMetaData& metadataStruct);
+        void Build();
+
+        void FetchInstance();
+
+        bool IsArcaInstanceAlive();
+
+
+
+        std::filesystem::path GetApplicationPath();
+        std::filesystem::path GetInstancePath();
+        
+
     protected:
         ArcaInstance() = default;
     private:
@@ -26,7 +41,10 @@ class ArcaInstance {
         std::filesystem::path _instanceFilePath;
         
         bool _instanceIsReady = false;
-        ArcaInstanceConfig _config;
+        Arca::ApplicationMetaData _metadata;
+
+
+        nlohmann::json MetadataSerilaization();
 
 
         // Instace realated guard functions 

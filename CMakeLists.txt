@@ -21,3 +21,4 @@ enable_testing()
 add_subdirectory(arca)
 
 add_subdirectory(examples/00-helloworld)
+add_subdirectory(examples/01-modules)

@@ -43,7 +43,6 @@ class ArcaModule {
 
         std::map<std::string, std::filesystem::path> mAssetMap;
         
-        ArcaIO io;
 
         std::filesystem::path PathBuilder(const std::filesystem::path& path, const std::string& name);
         bool Load(const nlohmann::json& fs);

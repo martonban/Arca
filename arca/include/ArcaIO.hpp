@@ -15,14 +15,10 @@
 #include <string>
 #include <map>
 
-
-
-class ArcaIO {
-    public:
-        // General Functions
-        bool IsFileExists(const std::filesystem::path& fullFilePath);
-        bool CreateFolder(const std::filesystem::path& path, const std::string& name);
-        bool IsFolderExists(const std::filesystem::path& path);
+namespace Arca::ArcaIO {
+    bool IsFileExists(const std::filesystem::path& fullFilePath);
+    bool CreateFolder(const std::filesystem::path& path, const std::string& name);
+    bool IsFolderExists(const std::filesystem::path& path);
 };
 
 #endif

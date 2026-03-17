@@ -14,6 +14,7 @@
 #include <memory> 
 
 #include "ArcaInstance.hpp"
+#include "ArcaSettings.hpp"
 
 namespace Arca {
     /**
@@ -25,6 +26,32 @@ namespace Arca {
      */
     void InitArcaInstance(const std::string& applicationName) {
         ArcaInstance::GetInstance().StartArcaInstance(applicationName);
+    }
+
+    bool IsAlive() {
+        return ArcaInstance::GetInstance().IsArcaInstanceAlive();
+    }
+
+
+    void AddMetaData(const Arca::ApplicationMetaData& metaDataStruct) {
+        ArcaInstance::GetInstance().AddApplicationMetadata(metaDataStruct);
+    }
+
+    void BuildInstance() {
+        ArcaInstance::GetInstance().Build();
+    }
+
+
+    void FetchArcaInstance() {
+        ArcaInstance::GetInstance().FetchInstance();
+    }
+
+    std::filesystem::path GetApplicationPath() {
+        return ArcaInstance::GetInstance().GetApplicationPath();
+    }
+
+    std::filesystem::path GetArcaInstancePath() {
+        return ArcaInstance::GetInstance().GetInstancePath();
     }
 }
 
