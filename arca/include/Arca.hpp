@@ -13,8 +13,9 @@
 #include <filesystem>
 #include <memory> 
 
+#include "ArcaModule.hpp"
 #include "ArcaInstance.hpp"
-#include "ArcaSettings.hpp"
+#include "ArcaCommon.hpp"
 
 namespace Arca {
     /**
@@ -32,7 +33,6 @@ namespace Arca {
         return ArcaInstance::GetInstance().IsArcaInstanceAlive();
     }
 
-
     void AddMetaData(const Arca::ApplicationMetaData& metaDataStruct) {
         ArcaInstance::GetInstance().AddApplicationMetadata(metaDataStruct);
     }
@@ -41,9 +41,28 @@ namespace Arca {
         ArcaInstance::GetInstance().Build();
     }
 
-
     void FetchArcaInstance() {
         ArcaInstance::GetInstance().FetchInstance();
+    }
+
+    bool AddModule(const Arca::ModuleConfig& moduleConfig) {
+        return ArcaInstance::GetInstance().AddModule(moduleConfig);
+    }
+
+    bool RemoveModule(const std::string& moduleName) {
+        return ArcaInstance::GetInstance().RemoveModule(moduleName);
+    }
+
+    bool AddModuleReference(std::shared_ptr<Arca::Module> moduleRef) {
+        return ArcaInstance::GetInstance().AddModuleReference(moduleRef);
+    }
+
+    Arca::ModuleConfig GetModule(const std::string& moduleName) {
+        return ArcaInstance::GetInstance().GetModuleConfig(moduleName);
+    }
+
+    bool Save() {
+        return ArcaInstance::GetInstance().Save();
     }
 
     void Test() {

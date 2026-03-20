@@ -1,15 +1,16 @@
 #ifndef ARCA_INSTANCE_HPP
 #define ARCA_INSTANCE_HPP
 
-#include <string>
 #include <memory>
+#include <string>
+#include <map>
 #include <fstream>
 #include <filesystem>
 #include <nlohmann/json.hpp>
 
+#include "ArcaModule.hpp"
 #include "ArcaSettings.hpp"
 #include "ArcaIO.hpp"
-#include "ArcaModule.hpp"
 
 class ArcaInstance {
     public:
@@ -22,6 +23,10 @@ class ArcaInstance {
 
         void AddApplicationMetadata(const Arca::ApplicationMetaData& metadataStruct);
         void Build();
+
+        bool AddModule(const Arca::ModuleConfig& moduleConfig);
+        Arca::ModuleConfig GetModule(const std::string& moduleName);
+
 
         void FetchInstance();
 
@@ -36,14 +41,19 @@ class ArcaInstance {
     protected:
         ArcaInstance() = default;
     private:
-        std::filesystem::path _instanceFolderPath;
-        std::filesystem::path _instanceFilePath;
-        
         bool _instanceIsReady = false;
+        std::filesystem::path _applicationFolderPath;    // absolute path: ApplicationRoot
+        std::filesystem::path _instanceFilePath;        // absolute path: ApplicationRoot/ArcaFiles/AppName.json
+
         Arca::ApplicationMetaData _metadata;
 
+        std::map<std::string, Arca::ModuleConfig> _moduleMap;
+
         nlohmann::json MetadataSerilaization();
+        nlohmann::json ModulesSerialization();
+
         Arca::ApplicationMetaData MetadataDeserilaization(const nlohmann::json& jsonObject);
+        std::map<std::string, Arca::ModuleConfig> ModulesDeserialiazation(const nlohmann::json& jsonObject);
 
         // Instace realated guard functions 
         ArcaInstance(const ArcaInstance&) = delete;

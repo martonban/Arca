@@ -1,19 +1,23 @@
 #include "Arca.hpp"
+#include "MyModule.hpp"
 
 int main() {
 
-	Arca::InitArcaInstance("RenderLamp");
+	Arca::InitArcaInstance("ArcaModule");
     
     if(!Arca::IsExists()) {
-        Arca::ApplicationMetaData metaData {"RenderLamp", "Márton Bán", "v.0.0.1"};
+        // Base Arca
+        Arca::ApplicationMetaData metaData {"ArcaModule", "Márton Bán", "v.0.0.1"};
         Arca::AddMetaData(metaData);
+   
         Arca::BuildInstance();
-    } else {
-        Arca::FetchArcaInstance();
     }
+
+    Arca::Test();
+
+    MyModule module {};
+    
 
     std::string input;
     std::cin >> input;
-
-	return 0;
 }
