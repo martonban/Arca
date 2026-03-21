@@ -9,7 +9,7 @@ class MyModule {
         MyModule();
     
     private:
-        std::shared_ptr<Arca::Module> arcaModule 
+        std::shared_ptr<Arca::Module> arcaModule; 
 };
 
 

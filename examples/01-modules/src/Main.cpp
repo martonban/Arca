@@ -11,10 +11,20 @@ int main() {
         Arca::AddMetaData(metaData);
    
         Arca::BuildInstance();
+
+        Arca::ModuleConfig coreModuleConfig {
+            "TestModule",
+            std::filesystem::path {},
+            Arca::CORE_TYPE,
+            Arca::READY_FOR_PROCESSING
+        };
+
+        Arca::ProcessModuleConfig(coreModuleConfig);
+        Arca::AddModule(coreModuleConfig);
+        Arca::BuildInstance();
     }
 
     Arca::Test();
-
     MyModule module {};
     
 

@@ -9,6 +9,9 @@ void ArcaInstance::StartArcaInstance(const std::string& applicationName) {
         _instanceIsReady = true;
         FetchInstance();
     } else {
+        if (!Arca::ArcaIO::CreateFolder(_applicationFolderPath, "ArcaFiles")) {
+            std::cerr << "Error: If you see this message, something went really really bad" << std::endl;
+        }
         _instanceIsReady = false;
     }
 }
@@ -18,7 +21,6 @@ void ArcaInstance::AddApplicationMetadata(const Arca::ApplicationMetaData& metad
 }
 
 void ArcaInstance::Build() {
-    Arca::ArcaIO::CreateFolder(_applicationFolderPath, "ArcaFiles");
     nlohmann::json serializedFile {
         {"ApplicationMetadata", MetadataSerilaization()},
         {"InstanceModules", ModulesSerialization()}
@@ -34,16 +36,12 @@ void ArcaInstance::Build() {
 }
 
 bool ArcaInstance::AddModule(const Arca::ModuleConfig& moduleConfig) {
-    if(IsArcaInstanceAlive()) {
-        std::string name = moduleConfig.moduleName;
-       if(_moduleMap.find(name) != _moduleMap.end()) {
-            return false;
-        } else {
-            _moduleMap[name] = moduleConfig;
-            return true;
-        }
-    } else {
+    std::string name = moduleConfig.moduleName;
+    if(_moduleMap.find(name) != _moduleMap.end()) {
         return false;
+    } else {
+        _moduleMap[name] = moduleConfig;
+        return true;
     }
 }
 
@@ -58,6 +56,41 @@ Arca::ModuleConfig ArcaInstance::GetModule(const std::string& moduleName) {
         return Arca::ModuleConfig {};
     }
 }
+
+void ArcaInstance::ProcessModuleConfig(Arca::ModuleConfig& config) {
+    std::filesystem::path tmpPath = config.moduelPath;
+    switch (config.type)
+    {
+    case Arca::CORE_TYPE:
+        if(Arca::ArcaIO::CreateFolder(std::filesystem::absolute(GetApplicationPath() / "ArcaFiles"), config.moduleName)) {
+            config.moduelPath = GetApplicationPath() / "ArcaFiles" / (config.moduleName + ".json");
+            config.status = Arca::PROCESSED;
+        } else {
+            std::cerr << "ERROR: " << std::endl;
+        }
+        break;
+    case Arca::EXTERNAL_TYPE:
+        if(Arca::ArcaIO::CreateFolder(tmpPath, config.moduleName)) {
+            config.moduelPath = tmpPath / config.moduleName / (config.moduleName + ".json");
+            config.status  = Arca::PROCESSED;
+
+        } else {
+            std::cerr << "ERROR: " << std::endl;
+        }
+        break;
+    case Arca::EXTERNAL_FREEDOM_TYPE:
+        if(Arca::ArcaIO::IsFolderExists(tmpPath)) {
+            config.moduelPath = tmpPath / (config.moduleName + ".json");
+            config.status = Arca::PROCESSED;
+        } else {
+            std::cerr << "ERROR: " << std::endl;
+        }
+    default:
+        std::cerr << "ERROR: " << std::endl;
+        break;
+    }
+}
+
 
 void ArcaInstance::FetchInstance() {
     std::ifstream rawFile(_instanceFilePath);

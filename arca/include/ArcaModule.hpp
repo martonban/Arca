@@ -7,7 +7,6 @@
 #include <string>
 #include <memory>
 
-#include "Arca.hpp"
 #include "ArcaIO.hpp"
 #include "ArcaCommon.hpp"
 

@@ -25,55 +25,47 @@ namespace Arca {
      * @param applicationName The name of the application to be used within Arca
      * @return No return value
      */
-    void InitArcaInstance(const std::string& applicationName) {
+    inline void InitArcaInstance(const std::string& applicationName) {
         ArcaInstance::GetInstance().StartArcaInstance(applicationName);
     }
 
-    bool IsExists() {
+    inline bool IsExists() {
         return ArcaInstance::GetInstance().IsArcaInstanceAlive();
     }
 
-    void AddMetaData(const Arca::ApplicationMetaData& metaDataStruct) {
+    inline void AddMetaData(const Arca::ApplicationMetaData& metaDataStruct) {
         ArcaInstance::GetInstance().AddApplicationMetadata(metaDataStruct);
     }
 
-    void BuildInstance() {
+    inline void BuildInstance() {
         ArcaInstance::GetInstance().Build();
     }
 
-    void FetchArcaInstance() {
+    inline void FetchArcaInstance() {
         ArcaInstance::GetInstance().FetchInstance();
     }
 
-    bool AddModule(const Arca::ModuleConfig& moduleConfig) {
+    inline bool AddModule(const Arca::ModuleConfig& moduleConfig) {
         return ArcaInstance::GetInstance().AddModule(moduleConfig);
     }
 
-    bool RemoveModule(const std::string& moduleName) {
-        return ArcaInstance::GetInstance().RemoveModule(moduleName);
+    inline ModuleConfig GetModule(const std::string& moduleName) {
+        return ArcaInstance::GetInstance().GetModule(moduleName);
     }
 
-    bool AddModuleReference(std::shared_ptr<Arca::Module> moduleRef) {
-        return ArcaInstance::GetInstance().AddModuleReference(moduleRef);
+    inline void ProcessModuleConfig(Arca::ModuleConfig& config) {
+        ArcaInstance::GetInstance().ProcessModuleConfig(config);
     }
 
-    Arca::ModuleConfig GetModule(const std::string& moduleName) {
-        return ArcaInstance::GetInstance().GetModuleConfig(moduleName);
-    }
-
-    bool Save() {
-        return ArcaInstance::GetInstance().Save();
-    }
-
-    void Test() {
+    inline void Test() {
         ArcaInstance::GetInstance().Test();
     }
 
-    std::filesystem::path GetApplicationPath() {
+    inline std::filesystem::path GetApplicationPath() {
         return ArcaInstance::GetInstance().GetApplicationPath();
     }
 
-    std::filesystem::path GetArcaInstancePath() {
+    inline std::filesystem::path GetArcaInstancePath() {
         return ArcaInstance::GetInstance().GetInstancePath();
     }
 }

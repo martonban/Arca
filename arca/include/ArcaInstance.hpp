@@ -9,7 +9,7 @@
 #include <nlohmann/json.hpp>
 
 #include "ArcaModule.hpp"
-#include "ArcaSettings.hpp"
+#include "ArcaCommon.hpp"
 #include "ArcaIO.hpp"
 
 class ArcaInstance {
@@ -26,6 +26,7 @@ class ArcaInstance {
 
         bool AddModule(const Arca::ModuleConfig& moduleConfig);
         Arca::ModuleConfig GetModule(const std::string& moduleName);
+        void ProcessModuleConfig(Arca::ModuleConfig& config);
 
 
         void FetchInstance();

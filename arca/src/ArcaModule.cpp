@@ -1,13 +1,19 @@
 #include "ArcaModule.hpp"
+#include "Arca.hpp"
 
 Arca::Module::Module(const Arca::ModuleConfig& config) {
-
     switch (config.status) {
     case READY_FOR_PROCESSING:
         ProcessModuleConfig(config);
         break;
     case PROCESSED:
-        Load(config);
+        if(!Arca::ArcaIO::IsFileExists(config.moduelPath)) {
+            Load(config);
+            Save();
+        } else {
+            Load(config);
+        }
+        
         break;
     default:
         break;
@@ -32,6 +38,7 @@ void Arca::Module::Save() {
 void Arca::Module::Load(const Arca::ModuleConfig& config) {
     _path = config.moduelPath;
     _status = config.status;
+    _name = config.moduleName;
     if(config.status == PROCESSED) {
         std::ifstream rawFile(config.moduelPath);
         if(!rawFile.is_open()) {

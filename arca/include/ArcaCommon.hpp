@@ -4,6 +4,17 @@
 #include <filesystem>
 
 namespace Arca {
+    enum ModuleType {
+        CORE_TYPE,
+        EXTERNAL_TYPE,
+        EXTERNAL_FREEDOM_TYPE
+    };
+
+    enum ModuleStatus {
+        READY_FOR_PROCESSING,
+        PROCESSED
+    };
+
     typedef struct ApplicationMetaData {
         std::string instanceName;
         std::string creatorName;
@@ -16,16 +27,4 @@ namespace Arca {
         ModuleType type;
         ModuleStatus status;
     } ModuleConfig;
-
-    enum ModuleType {
-        CORE_TYPE,
-        EXTERNAL_TYPE,
-        EXTERNAL_FREEDOM_TYPE
-    };
-
-    enum ModuleStatus {
-        READY_FOR_PROCESSING,
-        PROCESSED
-    };
-
 }
