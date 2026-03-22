@@ -1,5 +1,6 @@
 #include "Arca.hpp"
 #include "MyModule.hpp"
+#include <iostream>
 
 int main() {
 
@@ -9,8 +10,6 @@ int main() {
         // Base Arca
         Arca::ApplicationMetaData metaData {"ArcaModule", "Márton Bán", "v.0.0.1"};
         Arca::AddMetaData(metaData);
-   
-        Arca::BuildInstance();
 
         Arca::ModuleConfig coreModuleConfig {
             "TestModule",
@@ -21,12 +20,10 @@ int main() {
 
         Arca::ProcessModuleConfig(coreModuleConfig);
         Arca::AddModule(coreModuleConfig);
-        Arca::BuildInstance();
+        Arca::Build();
     }
 
     Arca::Test();
-    MyModule module {};
-    
 
     std::string input;
     std::cin >> input;

@@ -37,7 +37,7 @@ namespace Arca {
         ArcaInstance::GetInstance().AddApplicationMetadata(metaDataStruct);
     }
 
-    inline void BuildInstance() {
+    inline void Build() {
         ArcaInstance::GetInstance().Build();
     }
 
@@ -49,7 +49,7 @@ namespace Arca {
         return ArcaInstance::GetInstance().AddModule(moduleConfig);
     }
 
-    inline ModuleConfig GetModule(const std::string& moduleName) {
+    inline Arca::ModuleConfig GetModule(const std::string& moduleName) {
         return ArcaInstance::GetInstance().GetModule(moduleName);
     }
 

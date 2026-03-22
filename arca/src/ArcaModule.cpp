@@ -5,10 +5,11 @@ Arca::Module::Module(const Arca::ModuleConfig& config) {
     switch (config.status) {
     case READY_FOR_PROCESSING:
         ProcessModuleConfig(config);
+        Save();
         break;
     case PROCESSED:
-        if(!Arca::ArcaIO::IsFileExists(config.moduelPath)) {
-            Load(config);
+        if(!Arca::ArcaIO::IsFileExists(config.modulePath)) {
+            LoadFromConfig(config);
             Save();
         } else {
             Load(config);
@@ -36,11 +37,11 @@ void Arca::Module::Save() {
 }
 
 void Arca::Module::Load(const Arca::ModuleConfig& config) {
-    _path = config.moduelPath;
+    _path = config.modulePath;
     _status = config.status;
     _name = config.moduleName;
     if(config.status == PROCESSED) {
-        std::ifstream rawFile(config.moduelPath);
+        std::ifstream rawFile(config.modulePath);
         if(!rawFile.is_open()) {
             std::cerr << "Error: Arca Module is not exist!" << std::endl;
         }
@@ -51,6 +52,13 @@ void Arca::Module::Load(const Arca::ModuleConfig& config) {
         MetaDataDeserilaiazation(jsonObject);
         _accessPoints = DeserializeAccessPoints(jsonObject);
     }
+}
+
+void Arca::Module::LoadFromConfig(const Arca::ModuleConfig& config) {
+    _name = config.moduleName;
+    _path = config.modulePath;
+    _status = config.status;
+    _type = config.type;
 }
 
 
@@ -123,8 +131,8 @@ void Arca::Module::ProcessModuleConfig(const Arca::ModuleConfig& config) {
         }
         break;
     case EXTERNAL_TYPE:
-        if(Arca::ArcaIO::CreateFolder(config.moduelPath, _name)) {
-            _path = config.moduelPath / _name / (_name + ".json");
+        if(Arca::ArcaIO::CreateFolder(config.modulePath, _name)) {
+            _path = config.modulePath / _name / (_name + ".json");
             _status = PROCESSED;
              Save();
         } else {
@@ -132,8 +140,8 @@ void Arca::Module::ProcessModuleConfig(const Arca::ModuleConfig& config) {
         }
         break;
     case EXTERNAL_FREEDOM_TYPE:
-        if(Arca::ArcaIO::IsFolderExists(config.moduelPath)) {
-            _path = config.moduelPath / (_name + ".json");
+        if(Arca::ArcaIO::IsFolderExists(config.modulePath)) {
+            _path = config.modulePath / (_name + ".json");
             _status = PROCESSED;
              Save();
         } else {

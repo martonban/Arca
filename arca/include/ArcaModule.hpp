@@ -17,6 +17,7 @@ namespace Arca {
 
             void Save();
             void Load(const Arca::ModuleConfig& config);
+            void LoadFromConfig(const Arca::ModuleConfig& config);
 
             bool AddAccessPoint(const std::string& key, const std::filesystem::path& path);
             std::filesystem::path GetAccessPoint(const std::string& key);

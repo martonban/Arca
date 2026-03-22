@@ -7,7 +7,7 @@ int main() {
     if(!Arca::IsExists()) {
         Arca::ApplicationMetaData metaData {"HelloArca", "Márton Bán", "v.0.0.1"};
         Arca::AddMetaData(metaData);
-        Arca::BuildInstance();
+        Arca::Build();
     }
 
     Arca::Test();

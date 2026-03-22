@@ -42,6 +42,7 @@ class ArcaInstance {
     protected:
         ArcaInstance() = default;
     private:
+        // State Varriabels
         bool _instanceIsReady = false;
         std::filesystem::path _applicationFolderPath;    // absolute path: ApplicationRoot
         std::filesystem::path _instanceFilePath;        // absolute path: ApplicationRoot/ArcaFiles/AppName.json
@@ -55,6 +56,8 @@ class ArcaInstance {
 
         Arca::ApplicationMetaData MetadataDeserilaization(const nlohmann::json& jsonObject);
         std::map<std::string, Arca::ModuleConfig> ModulesDeserialiazation(const nlohmann::json& jsonObject);
+
+
 
         // Instace realated guard functions 
         ArcaInstance(const ArcaInstance&) = delete;
