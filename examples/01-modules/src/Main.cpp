@@ -4,9 +4,9 @@
 
 int main() {
 
-	Arca::InitArcaInstance("ArcaModule");
+	Arca::InitArcaInstance("Arca Module");
     
-    if(!Arca::IsExists()) {
+    if(Arca::IsArcaNew()) {
         // Base Arca
         Arca::ApplicationMetaData metaData {"ArcaModule", "Márton Bán", "v.0.0.1"};
         Arca::AddMetaData(metaData);
@@ -24,6 +24,9 @@ int main() {
     }
 
     Arca::Test();
+
+    MyModule module {};
+    module.Print();
 
     std::string input;
     std::cin >> input;

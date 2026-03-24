@@ -15,6 +15,13 @@ namespace Arca {
         PROCESSED = 1
     };
 
+    enum ArcaInstanceStatus {
+        FIRST_LAUNCH = 0,
+        ARCA_FILES_DIRECTORY_CREATED = 1,
+        ARCA_INSTANCE_FILE_IS_VALID = 2,
+        ARCA_IS_READY = 3
+    };
+
     typedef struct ApplicationMetaData {
         std::string instanceName;
         std::string creatorName;

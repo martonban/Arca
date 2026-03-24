@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <cctype>
 #include <map>
 #include <fstream>
 #include <filesystem>
@@ -21,6 +22,8 @@ class ArcaInstance {
         }
         void StartArcaInstance(const std::string& applicationName);
 
+        void FetchInstance();
+
         void AddApplicationMetadata(const Arca::ApplicationMetaData& metadataStruct);
         void Build();
 
@@ -28,28 +31,32 @@ class ArcaInstance {
         Arca::ModuleConfig GetModule(const std::string& moduleName);
         void ProcessModuleConfig(Arca::ModuleConfig& config);
 
-
-        void FetchInstance();
-
         void Test();
 
-        bool IsArcaInstanceAlive();
-
         std::filesystem::path GetApplicationPath();
+        std::filesystem::path GetInstanceFolder();
         std::filesystem::path GetInstancePath();
+
+        bool IsArcaNew();
+        bool IsArcaInstanceReadyToSave();
+        bool IsArcaInstanceReadyToLoad();
         
 
     protected:
         ArcaInstance() = default;
     private:
         // State Varriabels
-        bool _instanceIsReady = false;
-        std::filesystem::path _applicationFolderPath;    // absolute path: ApplicationRoot
-        std::filesystem::path _instanceFilePath;        // absolute path: ApplicationRoot/ArcaFiles/AppName.json
+        Arca::ArcaInstanceStatus _arcaInstanceStatus;       // Arca Instance Lifetime indicator
+        std::filesystem::path _applicationFolderPath;       // absolute path: ApplicationRoot
+        std::filesystem::path _instanceFolderPath;          // absolute path: ApplicationRoot/ArcaFiles
+        std::filesystem::path _instanceFilePath;            // absolute path: ApplicationRoot/ArcaFiles/AppName.json
 
         Arca::ApplicationMetaData _metadata;
 
         std::map<std::string, Arca::ModuleConfig> _moduleMap;
+
+
+        void CreateFolderStruct();
 
         nlohmann::json MetadataSerilaization();
         nlohmann::json ModulesSerialization();
@@ -57,7 +64,14 @@ class ArcaInstance {
         Arca::ApplicationMetaData MetadataDeserilaization(const nlohmann::json& jsonObject);
         std::map<std::string, Arca::ModuleConfig> ModulesDeserialiazation(const nlohmann::json& jsonObject);
 
+        // Validators
+        bool IsInstaceFileValid();
+        bool IsMetadataValid(const Arca::ApplicationMetaData& metaData);
+        bool IsModuleConfigValid(const Arca::ModuleConfig& config);
 
+        // Helper Functions
+        std::string StringToUpperCamelCase(const std::string& input);
+ 
 
         // Instace realated guard functions 
         ArcaInstance(const ArcaInstance&) = delete;

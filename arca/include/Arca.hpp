@@ -29,8 +29,8 @@ namespace Arca {
         ArcaInstance::GetInstance().StartArcaInstance(applicationName);
     }
 
-    inline bool IsExists() {
-        return ArcaInstance::GetInstance().IsArcaInstanceAlive();
+    inline bool IsArcaNew() {
+        return ArcaInstance::GetInstance().IsArcaNew();
     }
 
     inline void AddMetaData(const Arca::ApplicationMetaData& metaDataStruct) {
